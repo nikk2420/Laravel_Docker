@@ -1,0 +1,49 @@
+services:
+
+  laravel-auth:
+    container_name: laravel-auth
+    build: .
+    volumes:
+      - ./source:/var/www/html
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "9000:80"
+    volumes:
+      - ./source:/var/www/html
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - laravel-auth
+
+# MySQL Database
+  # mysql_db:
+  #   image: mysql:8.0
+  #   container_name: laravel-auth
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: laravel
+  #     MYSQL_USER: laravel
+  #     MYSQL_PASSWORD: secret
+  #   # ports:
+  #   #   - "3306:3306"
+  #   # networks:
+  #   #   - laravel_network
+
+# MariaDB Database
+  mariadb:
+    image: mariadb:10.3
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel    
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
