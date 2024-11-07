@@ -1,11 +1,12 @@
 build:
-	docker-compose build --no-cache --force-rm
+	docker-compose build --no-cache --force-rmdocker-compose exec <service_name> php -m | grep intl
+
 stop:
 	docker-compose stop
 down:
 	docker-compose down	
 up: 
-	docker-compose up -d
+	docker-compose up --build -d
 composer-update:
 	docker exec laravel-auth bash -c "composer update"
 migrate-seed:
@@ -20,3 +21,7 @@ initial-commands:
 	@make up
 	@make composer-update
 	@make migrate-seed
+
+# docker exec -it laravel-auth bash
+
+# dalsukh bhai gohil timba // composer require filament/filament

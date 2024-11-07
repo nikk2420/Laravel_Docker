@@ -1,11 +1,13 @@
 services:
 
+# Project
   laravel-auth:
     container_name: laravel-auth
     build: .
     volumes:
       - ./source:/var/www/html
 
+# nginx server
   nginx:
     image: nginx:alpine
     container_name: nginx
@@ -40,6 +42,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: laravel    
 
+# PhPMyadmin
   phpmyadmin:
     image: phpmyadmin
     restart: always
